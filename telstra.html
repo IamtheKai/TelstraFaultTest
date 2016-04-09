@@ -1,79 +1,93 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Simple markers</title>
+    <title>Firebase Test</title>
     <style>
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
       }
-      #map {
+        
+        #map {
         height: 100%;
-      }
+        }
     </style>
-    <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js">
-    </script>
-  </head>
-  <body>
+    
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    
+</head>
+    
+    
+    
+<body>
     <div id="map"></div>
+    
+<!--
+    <p id = "id"></p>
+    <p id = "location"></p>
+    <p id = "severity"></p>
+-->
+    
+    
+    
     <script>
-
-    //pulling data from Firebase database
-    for(var i = 0; i <7381; i++){
-        var youareel = 'https://dazzling-torch-3303.firebaseio.com/' + i;    
-            var myDataRef = new Firebase(youareel);
-            myDataRef.once("value", function(snapshot) {
-            var meow = snapshot.val();
-            var identity = meow.id;
-            var location = meow.location;
-            var severity = meow.severity;
-            window.alert(identity);
-        }, function (errorObject) {
-            window.alert("The read failed: " + errorObject.code);
-        });
-    }   
+        //Make array of 1126 loctions within AUS
         
-    //initalizing the map
-      function initMap() {
-        var myLatLng = {lat: -25.363, lng: 131.044};
-        var lat_min = -20.99;
-        var long_min = 119.56
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: myLatLng
-        });
-          
-        var newLatLng = {lat: lat_min, lng: long_min};
-          
-        var marker = new google.maps.Marker({
-            position: newLatLng,
-            map: map
-        });
+        var locationArray = [];
+        for (i=0; i<11; i++){
+            for (j = 0; j<102; j++){
+                var currLoc = {lat: (-21 + i), lng: (116.49 + (0.3 * j))};
+                
+//                var currLat = -21 + i;
+//                var currLng = 116.49 + (0.3 * j);
+//                var currPoint = [currLat,currLng];
+                
+                locationArray.push(currLoc);
+            }
+        }
         
-    //plotting the pins on the map
-        for(i = 0; i < 929; i++){ 
-        lat_min = -20.99;
-        long_min = 119.56;
-        var change = Math.random()*11;
-        var change2 = Math.random()*28;
-        var temp_lat_min = lat_min - change;
-        var temp_long_min = long_min + change2;
-        newLatLng = {lat: temp_lat_min, lng: temp_long_min}; 
+        //WONT LET ME PLOT A POINT USING AN INDEXED LATLNG FROM THE ARRAY AS A COORDINATE.
+        
+        var map;
+        function initMap(){
+            map = new google.maps.Map(document.getElementById("map"),{
+                center: {lat: -25.588, lng: 135.200},
+                zoom: 5
+            });
+            
+            //TEST POINT USING N'th POINT IN locationArray
             var marker = new google.maps.Marker({
-                position: newLatLng,
-                map: map,
-                icon: 'https://gmaps-samples.googlecode.com/svn/trunk/markers/green/blank.png'
+                position:locationArray[1100],
+                map:map
             });
         }
+        
+        
     
-          
-      }
+        var iterator = 8; //this is (ID - 1) and is concatenated to the URL
+        var myFirebaseRef = new Firebase("https://dazzling-torch-3303.firebaseio.com/" + iterator);
+
+        myFirebaseRef.once("value", function(snapshot){
+            
+            var data = snapshot.val();  
+            var id = data.id;
+            var location = data.location;
+            var severity = data.severity;
+            
+            //PASS THE DATA TO THE HTML OUTPUT
+            document.getElementById("id").innerHTML = "FAULT # " + id;
+            document.getElementById("location").innerHTML = "Location: " + location;
+            document.getElementById("severity").innerHTML ="Severity: " + severity;
+            });
+        
     </script>
+    
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo8V0zr7E3-Oam-KQwdqv_Y7B1dTF9FcA&callback=initMap">
     </script>
-  </body>
+
+</body>
 </html>
