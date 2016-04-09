@@ -35,11 +35,11 @@
     
     <script>
         //Make array of 1126 loctions within AUS
-        
+        //INDEX RANGE: 0 to 1235
         var locationArray = [];
-        for (i=0; i<11; i++){
-            for (j = 0; j<102; j++){
-                var currLoc = {lat: (-21 + i), lng: (116.49 + (0.3 * j))};
+        for (i=0; i<12; i++){
+            for (j = 0; j<103; j++){
+                var currLoc = {lat: (-21 - i), lng: (116.49 + (0.3 * j))};
                 
 //                var currLat = -21 + i;
 //                var currLng = 116.49 + (0.3 * j);
@@ -58,11 +58,62 @@
                 zoom: 5
             });
             
-            //TEST POINT USING N'th POINT IN locationArray
-            var marker = new google.maps.Marker({
-                position:locationArray[1100],
-                map:map
-            });
+//            //TEST POINT USING N'th POINT IN locationArray
+//            var marker = new google.maps.Marker({
+//                position:locationArray[1235],
+//                map:map
+//            });
+            
+//            for (i = 0; i<1235; i++){
+//                var marker = new google.maps.Marker({
+//                position:locationArray[i],
+//                map:map
+//            });
+//            }
+            
+            
+            for (i = 0; i<7381; i++){//7381
+                var myFirebaseRef = new Firebase("https://dazzling-torch-3303.firebaseio.com/" + i);
+                myFirebaseRef.once("value", function(snapshot){
+            
+                var data = snapshot.val();  
+                var id = data.id;
+                var location = data.location;
+                var severity = data.severity;
+                
+                if (severity == 0){
+                    var marker = new google.maps.Marker({
+                    position:locationArray[location],
+                    map:map,
+                    icon: "http://gmaps-samples.googlecode.com/svn/trunk/markers/blue/blank.png"
+                    });
+                }
+                else if (severity == 1){
+                    var marker = new google.maps.Marker({
+                    position:locationArray[location],
+                    map:map,
+                    icon: "http://gmaps-samples.googlecode.com/svn/trunk/markers/orange/blank.png"
+                    });
+                }
+                else if (severity == 2){
+                    var marker = new google.maps.Marker({
+                    position:locationArray[location],
+                    map:map,
+                    icon: "http://gmaps-samples.googlecode.com/svn/trunk/markers/red/blank.png"
+                    });
+                }
+                    
+                    
+                    
+                    
+//                var marker = new google.maps.Marker({
+//                position:locationArray[location],
+//                map:map
+//                });
+                });
+                
+                }
+            
         }
         
         
