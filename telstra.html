@@ -23,7 +23,7 @@
 
     //pulling data from Firebase database
     for(var i = 0; i <7381; i++){
-        var youareel = 'https://dazzling-torch-3303.firebaseio.com/' + 1;    
+        var youareel = 'https://dazzling-torch-3303.firebaseio.com/' + i;    
             var myDataRef = new Firebase(youareel);
             myDataRef.once("value", function(snapshot) {
             var meow = snapshot.val();
