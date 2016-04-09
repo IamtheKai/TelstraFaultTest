@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple markers</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+    <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js">
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+
+      function initMap() {
+        var myLatLng = {lat: -25.363, lng: 131.044};
+        var lat_min = -20.99;
+        var long_min = 119.56
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: myLatLng
+        });
+          
+        var newLatLng = {lat: lat_min, lng: long_min};
+          
+        var market = new google.maps.Marker({
+            position: newLatLng,
+            map: map
+        });
+         
+        for(i = 0; i < 929; i++){ 
+        lat_min = -20.99;
+        long_min = 119.56;
+        var change = Math.random()*11;
+        var change2 = Math.random()*28;
+        var temp_lat_min = lat_min - change;
+        var temp_long_min = long_min + change2;
+        newLatLng = {lat: temp_lat_min, lng: temp_long_min}; 
+            var marker = new google.maps.Marker({
+                position: newLatLng,
+                map: map
+            });
+        }
+          
+          
+        var locArray = [3,3,3];
+          
+        for(i = 0; i < 7381; i++){
+        locArray[i] = 3;
+        }
+          
+        for (i = 0; i < 7381; i++){
+        var base = FirebaseApp.getDatabaseByUrl("https://dazzling-torch-3303.firebaseio.com/");
+        var location = base.getData(i + "/location");
+        var severity = base.getData(i + "/severity");
+        locArray[location] = severity;
+        }
+    
+          
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo8V0zr7E3-Oam-KQwdqv_Y7B1dTF9FcA&callback=initMap">
+    </script>
+  </body>
+</html>
