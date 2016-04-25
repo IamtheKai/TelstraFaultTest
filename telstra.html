@@ -12,7 +12,7 @@
       }
         
         #map {
-        height: 100%;
+        height: 90%;
         }
     </style>
     
@@ -118,9 +118,8 @@
         
         
     
-        var iterator = 8; //this is (ID - 1) and is concatenated to the URL
+        /*var iterator = 8; //this is (ID - 1) and is concatenated to the URL
         var myFirebaseRef = new Firebase("https://dazzling-torch-3303.firebaseio.com/" + iterator);
-
         myFirebaseRef.once("value", function(snapshot){
             
             var data = snapshot.val();  
@@ -133,7 +132,50 @@
             document.getElementById("location").innerHTML = "Location: " + location;
             document.getElementById("severity").innerHTML ="Severity: " + severity;
             });
+            */
         
+    </script>
+    
+    <button onclick="Function1()">Predicted Data</button>
+    
+    <script>
+        function Function1() {
+            
+            for (i = 0; i<7381; i++){//7381
+                var myFirebaseRef = new Firebase("https://dazzling-torch-3303.firebaseio.com/" + i);
+                myFirebaseRef.once("value", function(snapshot){
+            
+                var data = snapshot.val();  
+                var id = data.id;
+                var location = data.location;
+                var severity = data.severity;
+                
+                if (severity == 0){
+                    var marker = new google.maps.Marker({
+                    position:locationArray[location],
+                    map:map,
+                    icon: "http://gmaps-samples.googlecode.com/svn/trunk/markers/blue/blank.png"
+                    });
+                }
+                else if (severity == 1){
+                    var marker = new google.maps.Marker({
+                    position:locationArray[location],
+                    map:map,
+                    icon: "http://gmaps-samples.googlecode.com/svn/trunk/markers/orange/blank.png"
+                    });
+                }
+                else if (severity == 2){
+                    var marker = new google.maps.Marker({
+                    position:locationArray[location],
+                    map:map,
+                    icon: "http://gmaps-samples.googlecode.com/svn/trunk/markers/red/blank.png"
+                    });
+                }
+
+                });
+                
+                }
+        }
     </script>
     
     <script async defer
