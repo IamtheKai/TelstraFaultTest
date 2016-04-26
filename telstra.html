@@ -26,12 +26,6 @@
 <body>
     <div id="map"></div>
     
-<!--
-    <p id = "id"></p>
-    <p id = "location"></p>
-    <p id = "severity"></p>
--->
-    
     
     
     <script>
@@ -56,7 +50,7 @@
         function initMap(){
             map = new google.maps.Map(document.getElementById("map"),{
                 center: {lat: -25.588, lng: 135.200},
-                zoom: 5
+                zoom: 7
             });
             
 //            //TEST POINT USING N'th POINT IN locationArray
@@ -113,24 +107,6 @@
                 }
             
         }
-        
-        
-    
-        /*var iterator = 8; //this is (ID - 1) and is concatenated to the URL
-        var myFirebaseRef = new Firebase("https://dazzling-torch-3303.firebaseio.com/" + iterator);
-        myFirebaseRef.once("value", function(snapshot){
-            
-            var data = snapshot.val();  
-            var id = data.id;
-            var location = data.location;
-            var severity = data.severity;
-            
-            //PASS THE DATA TO THE HTML OUTPUT
-            document.getElementById("id").innerHTML = "FAULT # " + id;
-            document.getElementById("location").innerHTML = "Location: " + location;
-            document.getElementById("severity").innerHTML ="Severity: " + severity;
-            });
-            */
         
     </script>
     
