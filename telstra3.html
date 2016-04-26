@@ -18,13 +18,10 @@
     
     <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
     
-</head>
-    
-    
+</head> 
     
 <body>
     <div id="map"></div>
-    
     
     <script>
         //Make array of 1126 loctions within AUS
@@ -54,7 +51,7 @@
  
             
             for (i = 0; i<7381; i++){//7381
-                var myFirebaseRef = new Firebase("https://dazzling-torch-3303.firebaseio.com/" + i);
+                var myFirebaseRef = new Firebase("https://telstra3.firebaseio.com/" + i);
                 myFirebaseRef.once("value", function(snapshot){
             
                 var data = snapshot.val();  
@@ -95,15 +92,15 @@
                 }
             
         }
-        
+
         
     </script>
     
+    <form action="telstra.html">
+        <input type="submit" value="Original Data">
+    </form>
     <form action="telstra2.html">
         <input type="submit" value="Predicted Data 1">
-    </form>
-    <form action="telstra3.html">
-        <input type="submit" value="Predicted Data 2">
     </form>
     <form action="telstra4.html">
         <input type="submit" value="Predicted Data 3">
